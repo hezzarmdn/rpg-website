@@ -1,39 +1,27 @@
 body {
-  background: #0c0c0c;
-  color: #00ff66;
+  background: #111;
+  color: #0f0;
   font-family: monospace;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
 }
 
 #game {
-  width: 90%;
-  max-width: 600px;
-  border: 2px solid #00ff66;
-  padding: 10px;
-  border-radius: 8px;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  height: 80vh;
+  width: 80%;
+  margin: 100px auto;
+  border: 1px solid #0f0;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 #output {
-  flex: 1;
+  height: 300px;
   overflow-y: auto;
   margin-bottom: 10px;
-  white-space: pre-wrap;
 }
 
 #input {
   width: 100%;
   padding: 10px;
-  background: #111;
-  color: #00ff66;
-  border: none;
-  outline: none;
-  font-size: 16px;
+  background: #000;
+  color: #0f0;
+  border: 1px solid #0f0;
 }
