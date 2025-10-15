@@ -1,0 +1,33 @@
+body {
+  background: #0d0d0d;
+  color: #0f0;
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#game {
+  width: 90%;
+  max-width: 600px;
+  border: 2px solid #0f0;
+  padding: 10px;
+  border-radius: 8px;
+  background: #000;
+}
+
+#output {
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+#input {
+  width: 100%;
+  padding: 8px;
+  background: #111;
+  color: #0f0;
+  border: none;
+  outline: none;
+}
