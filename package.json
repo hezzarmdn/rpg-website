@@ -1,0 +1,9 @@
+{
+  "name": "text-rpg",
+  "version": "1.0.0",
+  "main": "index.html",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.7"
+  }
+}
