@@ -21,7 +21,7 @@ input.addEventListener("keypress", async (e) => {
     const username = localStorage.getItem("username") || "guest";
 
     try {
-      const res = await fetch("/api/game", {
+      const res = await fetch("/api/game.js", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ command, username }),
