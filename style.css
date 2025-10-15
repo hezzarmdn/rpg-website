@@ -1,33 +1,38 @@
 body {
   background: #0d0d0d;
-  color: #0f0;
+  color: #00ff66;
   font-family: monospace;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 0;
 }
 
 #game {
   width: 90%;
   max-width: 600px;
-  border: 2px solid #0f0;
+  border: 2px solid #00ff66;
   padding: 10px;
   border-radius: 8px;
   background: #000;
+  display: flex;
+  flex-direction: column;
 }
 
 #output {
-  height: 400px;
+  flex: 1;
   overflow-y: auto;
   margin-bottom: 10px;
+  white-space: pre-wrap;
 }
 
 #input {
   width: 100%;
   padding: 8px;
   background: #111;
-  color: #0f0;
+  color: #00ff66;
   border: none;
   outline: none;
+  font-size: 16px;
 }
