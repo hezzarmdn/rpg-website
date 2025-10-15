@@ -1,43 +1,29 @@
 const input = document.getElementById("input");
 const output = document.getElementById("output");
 
-function show(text, isSystem = false) {
-  const div = document.createElement("div");
-  div.textContent = (isSystem ? "" : "> ") + text;
-  output.appendChild(div);
+function print(text) {
+  const p = document.createElement("div");
+  p.textContent = text;
+  output.appendChild(p);
   output.scrollTop = output.scrollHeight;
 }
 
-async function sendCommand(command) {
-  const username = localStorage.getItem("username") || "guest";
-
-  try {
-    const res = await fetch("/api/game", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ command, username }),
-    });
-
-    const data = await res.json();
-    if (data.result) {
-      if (typeof data.result === "object") {
-        show(JSON.stringify(data.result, null, 2), true);
-      } else {
-        show(data.result, true);
-      }
-    } else {
-      show("⚠️ Tidak ada respons dari server.", true);
-    }
-  } catch (err) {
-    show("⚠️ Gagal konek ke server.", true);
-  }
-}
+print("Selamat datang di dunia RPG!");
+print("Ketik /help untuk melihat perintah yang tersedia.\n");
 
 input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && input.value.trim() !== "") {
+  if (e.key === "Enter") {
     const command = input.value.trim();
-    show(command);
-    sendCommand(command);
     input.value = "";
+
+    if (command === "/help") {
+      print("Perintah tersedia:\n/shop - Buka toko\n/stats - Lihat status pemain");
+    } else if (command === "/shop") {
+      print("Toko: Pedang - 100 gold | Perisai - 150 gold");
+    } else if (command === "/stats") {
+      print("Nama: Petualang\nLevel: 1\nHP: 100\nGold: 50");
+    } else {
+      print(`Perintah '${command}' tidak dikenal.`);
+    }
   }
 });
