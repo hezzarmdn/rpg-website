@@ -1,44 +1,43 @@
 const input = document.getElementById("input");
 const output = document.getElementById("output");
 
-function show(text) {
+function show(text, isSystem = false) {
   const div = document.createElement("div");
-  div.textContent = "> " + text;
+  div.textContent = (isSystem ? "" : "> ") + text;
   output.appendChild(div);
   output.scrollTop = output.scrollHeight;
 }
 
-// Deteksi tekan Enter, pastiin gak nge-refresh halaman
-input.addEventListener("keypress", async (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault(); // mencegah reload form
-    const command = input.value.trim();
-    if (!command) return;
+async function sendCommand(command) {
+  const username = localStorage.getItem("username") || "guest";
 
-    show(command);
-    input.value = "";
+  try {
+    const res = await fetch("/api/game", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ command, username }),
+    });
 
-    const username = localStorage.getItem("username") || "guest";
-
-    try {
-      const res = await fetch("/api/game.js", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ command, username }),
-      });
-
-      const data = await res.json();
-      if (data.result) {
-        if (typeof data.result === "object") {
-          show(JSON.stringify(data.result, null, 2));
-        } else {
-          show(data.result);
-        }
+    const data = await res.json();
+    if (data.result) {
+      if (typeof data.result === "object") {
+        show(JSON.stringify(data.result, null, 2), true);
       } else {
-        show("❓ Tidak ada respon dari server.");
+        show(data.result, true);
       }
-    } catch (err) {
-      show("⚠️ Gagal konek ke server: " + err.message);
+    } else {
+      show("⚠️ Tidak ada respons dari server.", true);
     }
+  } catch (err) {
+    show("⚠️ Gagal konek ke server.", true);
+  }
+}
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && input.value.trim() !== "") {
+    const command = input.value.trim();
+    show(command);
+    sendCommand(command);
+    input.value = "";
   }
 });
