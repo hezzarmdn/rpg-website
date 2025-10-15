@@ -8,9 +8,13 @@ function show(text) {
   output.scrollTop = output.scrollHeight;
 }
 
-input.addEventListener("keydown", async (e) => {
-  if (e.key === "Enter" && input.value.trim() !== "") {
+// Deteksi tekan Enter, pastiin gak nge-refresh halaman
+input.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault(); // mencegah reload form
     const command = input.value.trim();
+    if (!command) return;
+
     show(command);
     input.value = "";
 
@@ -22,10 +26,19 @@ input.addEventListener("keydown", async (e) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ command, username }),
       });
+
       const data = await res.json();
-      show(JSON.stringify(data.result, null, 2));
+      if (data.result) {
+        if (typeof data.result === "object") {
+          show(JSON.stringify(data.result, null, 2));
+        } else {
+          show(data.result);
+        }
+      } else {
+        show("❓ Tidak ada respon dari server.");
+      }
     } catch (err) {
-      show("⚠️ Gagal konek ke server.");
+      show("⚠️ Gagal konek ke server: " + err.message);
     }
   }
 });
