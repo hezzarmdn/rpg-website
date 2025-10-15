@@ -1,29 +1,36 @@
-const input = document.getElementById("input");
 const output = document.getElementById("output");
+const input = document.getElementById("input");
+
+const player = {
+  name: "Player",
+  gold: 100,
+  inventory: []
+};
 
 function print(text) {
-  const p = document.createElement("div");
-  p.textContent = text;
-  output.appendChild(p);
+  output.innerHTML += `<p>${text}</p>`;
   output.scrollTop = output.scrollHeight;
 }
 
-print("Selamat datang di dunia RPG!");
-print("Ketik /help untuk melihat perintah yang tersedia.\n");
+function handleCommand(command) {
+  const cmd = command.trim().toLowerCase();
+  if (cmd === "/inventory") {
+    if (player.inventory.length === 0) print("Inventori kosong.");
+    else print("Inventori: " + player.inventory.join(", "));
+  } else if (cmd === "/shop") {
+    print("Toko: pedang (50 gold), perisai (40 gold)");
+  } else if (cmd === "/help") {
+    print("Perintah tersedia: /inventory, /shop, /help");
+  } else {
+    print("Perintah tidak dikenal.");
+  }
+}
 
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
-    const command = input.value.trim();
+    const command = input.value;
+    print("> " + command);
+    handleCommand(command);
     input.value = "";
-
-    if (command === "/help") {
-      print("Perintah tersedia:\n/shop - Buka toko\n/stats - Lihat status pemain");
-    } else if (command === "/shop") {
-      print("Toko: Pedang - 100 gold | Perisai - 150 gold");
-    } else if (command === "/stats") {
-      print("Nama: Petualang\nLevel: 1\nHP: 100\nGold: 50");
-    } else {
-      print(`Perintah '${command}' tidak dikenal.`);
-    }
   }
 });
